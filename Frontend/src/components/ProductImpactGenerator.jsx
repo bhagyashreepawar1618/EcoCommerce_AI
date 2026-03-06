@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const ImpactGenerator = () => {
-  const [productName, setProductName] = useState("");
+  const [product_name, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [impactResult, setImpactResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,11 +14,12 @@ const ImpactGenerator = () => {
       const response = await axios.post(
         "http://localhost:8000/api/ai/products/generate-impact",
         {
-          productName,
+          product_name,
           quantity,
         },
       );
 
+      console.log("res=", response.data.data);
       setImpactResult(response?.data?.data);
       setLoading(false);
     } catch (error) {
@@ -38,7 +39,7 @@ const ImpactGenerator = () => {
           <input
             type="text"
             placeholder="Product Name"
-            value={productName}
+            value={product_name}
             onChange={(e) => setProductName(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
