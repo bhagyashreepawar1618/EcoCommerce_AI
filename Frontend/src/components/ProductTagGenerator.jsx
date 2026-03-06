@@ -18,7 +18,7 @@ const ProductTagGenerator = () => {
 
       console.log("token fro generate tag=", token);
       const response = await axios.post(
-        "http://localhost:8000/api/ai/products/generate-tags",
+        `${import.meta.env.VITE_BACKEND_URL}/api/ai/products/generate-tags`,
         {
           productName,
           description,

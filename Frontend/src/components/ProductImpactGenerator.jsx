@@ -18,7 +18,7 @@ const ImpactGenerator = () => {
       console.log("token is=", token);
 
       const response = await axios.post(
-        "http://localhost:8000/api/ai/products/generate-impact",
+        `${import.meta.env.VITE_BACKEND_URL}/api/ai/products/generate-impact`,
         {
           product_name,
           quantity,
