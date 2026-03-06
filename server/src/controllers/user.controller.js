@@ -1,7 +1,7 @@
-import asyncHandler from '../utils/asyncHandler';
-import ApiError from '../utils/ApiError';
-import ApiResponse from '../utils/ApiResponse';
-import { User } from '../models/user.model';
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiError from '../utils/ApiError.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import { User } from '../models/user.model.js';
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -46,7 +46,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     password,
   });
 
-  const newlycreatedUser = await User.findById(user._id);
+  const newlycreatedUser = await User.findById(user._id).select('-password');
 
   if (!newlycreatedUser) {
     throw new ApiError(500, 'Something went wrong while registartion of user');
@@ -76,6 +76,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'user is not registered');
   }
 
+  console.log('user is=', user);
   //if found then check the password
   const isPasscorrect = await user.isPasswordCorrect(password);
 
@@ -84,13 +85,19 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 
   //if correct then generate access and refresh tokens
-  const { accessToken, refreshToken } = generateAccessAndRefreshTokens(
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );
 
   console.log('access tokenis =', accessToken);
 
-  const loggedInUser = await User.findById(user._id).select(['-password']);
+  const loggedInUser = await User.findById(user._id).select('-password');
 
-  return res.status(200).json(new ApiResponse(200, {}));
+  return res.status(200).json(
+    new ApiResponse(200, {
+      loggedInUser,
+      accessToken,
+      refreshToken,
+    })
+  );
 });
