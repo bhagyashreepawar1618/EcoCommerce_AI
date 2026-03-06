@@ -8,28 +8,6 @@ const Header = () => {
         <h1 className="text-xl font-bold">Rayeva AI</h1>
 
         <nav className="flex gap-6 items-center">
-          <NavLink
-            to="/generate-tags"
-            className={({ isActive }) =>
-              isActive
-                ? "text-purple-200 font-semibold"
-                : "hover:text-purple-200"
-            }
-          >
-            Generate Tags
-          </NavLink>
-
-          <NavLink
-            to="/generate-impact"
-            className={({ isActive }) =>
-              isActive
-                ? "text-purple-200 font-semibold"
-                : "hover:text-purple-200"
-            }
-          >
-            Generate Impact
-          </NavLink>
-
           {/* IMPORTANT: end prop */}
           <NavLink
             to="/"
