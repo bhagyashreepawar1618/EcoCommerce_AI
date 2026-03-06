@@ -1,8 +1,12 @@
 import asyncHandler from '../utils/asyncHandler.js';
 import ApiError from '../utils/ApiError.js';
 import ApiResponse from '../utils/ApiResponse.js';
-import { generateProductTags } from '../services/aiService.js';
+import {
+  generateProductTags,
+  generateProductImpact,
+} from '../services/aiService.js';
 import { Product } from '../models/products.model.js';
+import { Order } from '../models/order.model.js';
 
 export const generateTags = asyncHandler(async (req, res) => {
   //take input from user
@@ -39,4 +43,39 @@ export const generateTags = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, product, 'Tags generated successfully'));
+});
+
+export const generateImpact = asyncHandler(async (req, res) => {
+  //take input from user
+  const { product_name, quantity } = req.body;
+  console.log('product name=', product_name);
+
+  //validation
+  if (!product_name || !quantity) {
+    throw new ApiError(400, 'both fields are compulsory');
+  }
+
+  let impactresponse;
+  //generate ai response
+  try {
+    impactresponse = JSON.parse(
+      await generateProductImpact(product_name, quantity)
+    );
+  } catch (error) {
+    throw new ApiError(500, 'something went wrong while generating impact');
+  }
+
+  //store it in database
+  const impact = await Order.create({
+    product_name,
+    quantity,
+    plastic_saved: impactresponse.plastic_saved,
+    carbon_avoided: impactresponse.carbon_avoided,
+    impact_statement: impactresponse.impact_statement,
+  });
+
+  //return response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, impact, 'Impact generated successfully'));
 });
