@@ -10,16 +10,18 @@ const ProductTagGenerator = () => {
   const generateTags = async () => {
     try {
       setLoading(true);
+      console.log("Product Name=", productName);
 
       const response = await axios.post(
-        "http://localhost:5000/api/ai/generate-tags",
+        "http://localhost:8000/api/ai/products/generate-tags",
         {
           productName,
           description,
         },
       );
 
-      setAiResult(response?.data);
+      console.log("res=", response?.data);
+      setAiResult(response?.data?.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -68,7 +70,7 @@ const ProductTagGenerator = () => {
 
             <p className="text-gray-700">
               <span className="font-semibold">Primary Category:</span>{" "}
-              {aiResult.primary_category}
+              {aiResult.category}
             </p>
 
             <p className="text-gray-700 mt-2">
@@ -78,7 +80,7 @@ const ProductTagGenerator = () => {
 
             <p className="text-gray-700 mt-2">
               <span className="font-semibold">SEO Tags:</span>{" "}
-              {aiResult.seo_tags?.join(", ")}
+              {aiResult.tags?.join(", ")}
             </p>
 
             <p className="text-gray-700 mt-2">
