@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ProductTagGenerator = () => {
@@ -6,21 +6,30 @@ const ProductTagGenerator = () => {
   const [description, setDescription] = useState("");
   const [aiResult, setAiResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
 
   const generateTags = async () => {
     try {
       setLoading(true);
-      console.log("Product Name=", productName);
 
+      console.log("token fro generate tag=", token);
       const response = await axios.post(
         "http://localhost:8000/api/ai/products/generate-tags",
         {
           productName,
           description,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
-      console.log("res=", response?.data);
       setAiResult(response?.data?.data);
       setLoading(false);
     } catch (error) {

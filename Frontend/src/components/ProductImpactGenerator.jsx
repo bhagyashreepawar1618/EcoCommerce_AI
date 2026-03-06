@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ImpactGenerator = () => {
@@ -6,16 +6,27 @@ const ImpactGenerator = () => {
   const [quantity, setQuantity] = useState("");
   const [impactResult, setImpactResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
 
   const generateImpact = async () => {
     try {
       setLoading(true);
+      console.log("token is=", token);
 
       const response = await axios.post(
         "http://localhost:8000/api/ai/products/generate-impact",
         {
           product_name,
           quantity,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
 
