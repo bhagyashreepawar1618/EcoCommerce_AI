@@ -13,16 +13,18 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:8000/api/v1/user/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
+        {
+          username,
+          password,
+        },
+      );
 
       console.log("login response =", res.data);
 
       setMessage("Login successful ✅");
 
-      // agar JWT token aaye
       if (res.data?.data?.accessToken) {
         localStorage.setItem("token", res.data.data.accessToken);
       }
