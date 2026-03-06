@@ -11,10 +11,13 @@ const Register = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:8000/api/auth/register", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/user/register",
+        {
+          username,
+          password,
+        },
+      );
 
       setMessage("User registered successfully ✅");
       setUsername("");
