@@ -5,8 +5,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
-import ProductTagGenerator from "./components/ProductTagGenerator";
-import ImpactGenerator from "./components/ProductImpactGenerator";
+import ProductTagGenerator from "./components/ProductTagGenerator.jsx";
+import ImpactGenerator from "./components/ProductImpactGenerator.jsx";
+import InnerLayout from "./components/InnerLayout.jsx";
 
 const route = createBrowserRouter([
   {
@@ -22,12 +23,18 @@ const route = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "generate-tags",
-        element: <ProductTagGenerator />,
-      },
-      {
-        path: "generate-impact",
-        element: <ImpactGenerator />,
+        path: "generate-page",
+        element: <InnerLayout />,
+        children: [
+          {
+            path: "",
+            element: <ProductTagGenerator />,
+          },
+          {
+            path: "generate-impact",
+            element: <ImpactGenerator />,
+          },
+        ],
       },
     ],
   },
