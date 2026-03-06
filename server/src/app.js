@@ -3,8 +3,12 @@ import productRouter from './routes/product.routes.js';
 import userRouter from './routes/User.routes.js';
 import cors from 'cors';
 const app = express();
-
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
