@@ -12,10 +12,10 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      console.log(`backend url= ${import.meta.env.VITE_BACKEND_URL}`);
+      // console.log(`backend url= ${import.meta.env.VITE_BACKEND_URL}`);
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
+        `https://ecocommerce-ai.onrender.com/api/v1/user/login`,
         {
           username,
           password,
