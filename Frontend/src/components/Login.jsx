@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -11,7 +13,7 @@ const Login = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:8000/api/auth/login", {
+      const res = await axios.post("http://localhost:8000/api/v1/user/login", {
         username,
         password,
       });
@@ -21,11 +23,12 @@ const Login = () => {
       setMessage("Login successful ✅");
 
       // agar JWT token aaye
-      if (res.data?.token) {
-        localStorage.setItem("token", res.data.token);
+      if (res.data?.data?.accessToken) {
+        localStorage.setItem("token", res.data.data.accessToken);
       }
 
       setLoading(false);
+      navigate("/generate-page", { replace: true });
     } catch (error) {
       console.log(error);
       setMessage("Invalid username or password ❌");
