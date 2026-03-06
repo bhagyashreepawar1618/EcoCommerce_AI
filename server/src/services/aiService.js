@@ -48,9 +48,10 @@ export const generateProductImpact = async (product_name, quantity) => {
   try {
     const impactresponse = await client.chat.completions.create({
       model: 'gpt-3.5-turbo',
-      messages: {
-        role: 'user',
-        content: `You are an AI sustainability analyst for an eco-commerce platform.
+      messages: [
+        {
+          role: 'user',
+          content: `You are an AI sustainability analyst for an eco-commerce platform.
 
 Given the product name and quantity, estimate the environmental impact.
 
@@ -70,9 +71,14 @@ Rules:
 - Carbon avoided should be a logical estimation.
 - Impact statement should explain the environmental benefit in 1-2 sentences.
 - Do NOT return anything except JSON.`,
-      },
+        },
+      ],
     });
 
+    console.log(
+      'responsee of aii=',
+      impactresponse?.choices[0]?.message?.content
+    );
     return impactresponse?.choices[0]?.message?.content;
   } catch (error) {
     console.log('Error occured while generating Impact ', error);
