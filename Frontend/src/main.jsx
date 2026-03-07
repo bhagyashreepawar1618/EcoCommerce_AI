@@ -8,6 +8,7 @@ import Login from "./components/Login.jsx";
 import ProductTagGenerator from "./components/ProductTagGenerator.jsx";
 import ImpactGenerator from "./components/ProductImpactGenerator.jsx";
 import InnerLayout from "./components/InnerLayout.jsx";
+import Home from "./components/Home.jsx";
 
 const route = createBrowserRouter([
   {
@@ -15,12 +16,16 @@ const route = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "",
+        path: "register",
         element: <Register />,
       },
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "",
+        element: <Home />,
       },
       {
         path: "generate-page",
