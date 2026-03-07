@@ -75,6 +75,7 @@ EcoCommerce_AI
 └── README.md
 ```
 
+
 ## 🧠 AI Capabilities
 
 ### 1️⃣ Product Tag Generator
@@ -100,6 +101,56 @@ AI analyzes the product and generates a **short sustainability impact explanatio
 - Carbon footprint awareness
 ---
 
+## 🤖 AI Prompt Design & Integration
+
+All AI communication is handled in `ai.js`. Structured prompts are sent to OpenAI, and JSON responses are returned for backend processing.
+
+### 1️⃣ Product Tag Generator
+
+```javascript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  apiKey: process.env.OPEN_ROUTER_AI_APIKEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+});
+
+export const generateProductTags = async (description) => {
+  try {
+    const response = await client.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `You are an AI assistant for a sustainable e-commerce platform.
+
+Based on the product description below, return structured JSON with:
+
+1. category (choose from: packaging, home, personal_care, food, office)
+2. sub_category
+3. tags (5-10 tags)
+4. sustainability_filters (choose from: plastic-free, compostable, vegan, recycled, biodegradable)
+
+Product Description:
+${description}
+
+Return ONLY valid JSON in this format:
+
+{
+ "category": "",
+ "sub_category": "",
+ "tags": [],
+ "sustainability_filters": []
+}`,
+        },
+      ],
+    });
+
+    return response?.choices[0]?.message?.content;
+  } catch (error) {
+    console.log('Error occurred while getting response from AI', error);
+  }
+};
 ## 📌 Future Improvements
 
 - Product recommendation system
@@ -109,6 +160,7 @@ AI analyzes the product and generates a **short sustainability impact explanatio
 ---
 ---
 
+```
 ## ⚙️ Environment Variables
 
 ### Frontend (.env)
@@ -116,8 +168,6 @@ AI analyzes the product and generates a **short sustainability impact explanatio
 ```
 VITE_BACKEND_URL=https://your backend
 ```
-
-Example:
 
 ```
 VITE_BACKEND_URL=https://your-backend.onrender.com
@@ -188,3 +238,4 @@ Full Stack Developer | AI Enthusiast
 ---
 
 ⭐ If you like this project, feel free to **star the repository**!
+
