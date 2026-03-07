@@ -22,9 +22,19 @@ Backend API:   https://ecocommerce-ai.onrender.com
 
 <img width="1000" height="864" alt="image" src="https://github.com/user-attachments/assets/e3fe7353-ac21-4d29-8004-abfa22e987e3" />
 
+---
+## 🏗️ Module Overview
 
+The system supports 4 AI modules:
 
+| Module | Status | Description |
+|--------|--------|-------------|
+| AI Auto-Category & Tag Generator | ✅ Implemented | Generates product categories, sub-categories, SEO tags, sustainability filters |
+| AI Sustainability Impact Generator | ✅ Implemented | Generates human-readable environmental impact statements |
+| AI B2B Proposal Generator | ⚪ Planned | Suggests sustainable product mix, budget allocation, cost breakdown |
+| AI WhatsApp Support Bot | ⚪ Planned | Handles customer queries, return policies, order status on WhatsApp |
 
+---
 ## 🚀 Features
 
 - 🔐 **User Authentication** (Login with JWT)
@@ -238,4 +248,5 @@ Full Stack Developer | AI Enthusiast
 ---
 
 ⭐ If you like this project, feel free to **star the repository**!
+
 
